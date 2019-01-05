@@ -7,7 +7,20 @@
 //
 
 #import "ViewController.h"
+#import "RSAEncryptor.h"
 
+/**
+ 加密的密文
+ */
+static NSString *encryptedCiphertext = @"n911fpjLnmHQAUU/NvLWDerV3z/LuAsVAW0U48q4PmdwQ5T6JvNnfi7fI/lEzbCptnsgtAp5335VIx3Aqi2w52VvBv6m+h5QqV1uxHTVKlS2VLjkeDn0eziZ9ppHqjFp3cIHdH0pHSk7HUCBWQzEBKFqnTo4U1PjHF5uuB/lml1LxbUAHZsYWTRC0r62HqiHnSLpdcJL+xS7z7UFfU3darm+O8IYbUYYCWSN4yWFOYOKugjkpWyQOBWl/6QG1XS0vSqAievGzrPrKdRs5punTMs5nyWuw+/I9/db/eiPQ9gZmxItrOvgNXem7pIvfvOLM3wNDrwf+GfolH3NmESrPYqzm/6WbYvdNbm3pNIK8wvg7jNfA4MWljG+s+n+6k0erf5BEQSYV2mLoTplZbbfgcBREMcmE/9dBGqwyKKcSvKgvMK1plwL/eexa2oguAnxZ+/aSZSuvSoVQrVghf9xiZG3/D0G1kAaRlpkAoiMUHEk32Z8ObnnrAuS8CIiMDQ4+P/ADcDJPnh7Ok7Swf7ewjZY0a/JTpYIuJBzv3WhEJKRvYNAyHl5py3eLv0gz+WpP2xhcgoWo2tDyQdtplSrw6hFzhDUbOBbLqDqSVseMLeKeG9PFF/pe5VugTCG4rlMpSKejbYLqI9ydAqCKHFEFQvEDKj78sdbDnzbsvq8MNU=";
+/**
+ 公钥
+ */
+static NSString *publicKey = @"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArstGFB2xgCzEoTrpgYu4kUayt0x+mALH8CfMAxDqC5P1CytCT0WNdpCGryb4KIwiYL97wE674rg+xM4OfB8bgh1wIupyEKFstT0R3OOQMihE/AW1AVfqBwg+AzR8DL5VGPDahJ+HWMUo6+zpnIjkPxG33+bty/t8FiQzGwf3IcwOeqH4Hwla5TmaQI0RRsUzno40vxEvZBObXudm9S3rhkRwEwpjsVSvwj0MzZmvwNFNcF9hVImBy2P2wSpcPTCVZa+K/jO/sojmlYf5mDOhr3S0MYKKk9HX8jrUXRKWOBm/anEa4h/6OZAE5CGNZfD2vAYzuyqfWG/P9IlzZDZxHQIDAQAB";
+/**
+ 私钥
+ */
+static NSString *privateKey = @"MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCuy0YUHbGALMShOumBi7iRRrK3TH6YAsfwJ8wDEOoLk/ULK0JPRY12kIavJvgojCJgv3vATrviuD7Ezg58HxuCHXAi6nIQoWy1PRHc45AyKET8BbUBV+oHCD4DNHwMvlUY8NqEn4dYxSjr7OmciOQ/Ebff5u3L+3wWJDMbB/chzA56ofgfCVrlOZpAjRFGxTOejjS/ES9kE5te52b1LeuGRHATCmOxVK/CPQzNma/A0U1wX2FUiYHLY/bBKlw9MJVlr4r+M7+yiOaVh/mYM6GvdLQxgoqT0dfyOtRdEpY4Gb9qcRriH/o5kATkIY1l8Pa8BjO7Kp9Yb8/0iXNkNnEdAgMBAAECggEAAd2akGFmwRr5OE1UK7VNkYNjKfCvkzjIYIhUNZ4rGVeJcIaULRttcJwHS/xK/sfMICM7E2jjuX5E8T3PysRcO03MIhtFf2bxrZeKxsRJCDgE0HnRHkQNc+jDHK6lOk+Xwe3kLzEytSBZmPcM4UZWxVOPlly1Ig27m9LkFsBFg39RDaV5XHukZZxqcA9Q9DHmzivpT7Q6DDzayOkQYH0jPFoMgMoin4w5dDVGgYp+MJllxjwVLWzXEtMK50Gk56knD6E8DVt60h34R1Imzt/1XWEXrCuWeFlabyNifYTidn38OWaQdgZgcyjibzILSkPKO/kJ7VqK01rMyf3ZgMKukQKBgQDaaRDzGoE8v3SysN9RGlpYsglAZ5Wsc5YHhmLE5jlNLUh/aEbzlN6Qy7sPQ2uhcOiTfn2dr4cXavEMsZZCRjH82501uhTkGCW+tpjfweqp/dsCH3My+idekBLDECWg/58Z2B9DT4hBzEs58yox4RPO2A5QtNDZoV3ZcIMcEfqqxQKBgQDM4IQGUHhsvVoFlIbE7VbozeGNddgxtLBwnXfm17AZUb5TiiQWYVISXIfzXBE+CcryEt88DDVJYPSRwFPQSsgq04ZH39TdlJu8t28lLDEXaPhIBkDhacmpVFDTqzXLLbOo6Dfojs8syzO9jctyGLBS+r3qkREPfzaCB1v7PPByeQKBgGu9ko/pzkDyTRXs7GysrE6+nJO5xXrJlgPmRgjNbQzmPrIi9YUpNdWFuqQf5RNBiGlh54OG2AQ0S+6wF+hfij8q8tVTEwUl6FC48JbIqQLsaEIW05QdFJiwR6ET8QwHrStpkpp4vEWBCsbubi0m08egiwdC+xewY4Rk3ThWoinlAoGAWyOdV7nAeI8bVtQlx8DVIqdDqUw9Ko941gAW8KgOfJTyl/Mh7prIicaD6+yO9wwgLePbTrkXk1cANT5bipNZzENgvuSBqziKtz7awKySAhn+KPwvLJeE0EDj2+WT/piMDZ2QEXJGE2Up1S8Yy97TwXYtugVik4RB2UIw1ujbBfECgYBcsTPw6M9TaV8XzHXEza1FSJk2QqIV08hV40QlotZwSXwi7ur4XhF5wIZJpN4wKtfieH/hIsem70ayUhDLZY2fyX+t6M1g0Mi/wNEQOk7cimqLLXQ0H5gwGQo6uP/GV5yep/Bmzf0CMYwi+L4jSdqsJ2IvCdA28l9k5olWz3L/oA==";
 @interface ViewController ()
 
 @end
@@ -16,14 +29,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    NSString *string = [RSAEncryptor decryptString:encryptedCiphertext privateKey:privateKey];
+    NSLog(@"%@", string);
+    
 }
 
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 
 @end

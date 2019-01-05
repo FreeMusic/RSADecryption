@@ -15,6 +15,7 @@
 		1847463E21E03DF200E05066 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1847463D21E03DF200E05066 /* main.m */; };
 		1847464821E03DF200E05066 /* RSA___Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1847464721E03DF200E05066 /* RSA___Tests.m */; };
 		1847465321E03DF200E05066 /* RSA___UITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1847465221E03DF200E05066 /* RSA___UITests.m */; };
+		1847466221E0411D00E05066 /* RSAEncryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1847466121E0411D00E05066 /* RSAEncryptor.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,8 @@
 		1847464E21E03DF200E05066 /* RSA加解密UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RSA加解密UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1847465221E03DF200E05066 /* RSA___UITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "RSA___UITests.m"; sourceTree = "<group>"; };
 		1847465421E03DF200E05066 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1847466021E0411D00E05066 /* RSAEncryptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSAEncryptor.h; sourceTree = "<group>"; };
+		1847466121E0411D00E05066 /* RSAEncryptor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSAEncryptor.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +108,8 @@
 				1847462F21E03DF000E05066 /* AppDelegate.m */,
 				1847463121E03DF000E05066 /* ViewController.h */,
 				1847463221E03DF000E05066 /* ViewController.m */,
+				1847466021E0411D00E05066 /* RSAEncryptor.h */,
+				1847466121E0411D00E05066 /* RSAEncryptor.m */,
 				1847463421E03DF000E05066 /* Main.storyboard */,
 				1847463721E03DF200E05066 /* Assets.xcassets */,
 				1847463921E03DF200E05066 /* LaunchScreen.storyboard */,
@@ -263,6 +268,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1847463321E03DF000E05066 /* ViewController.m in Sources */,
+				1847466221E0411D00E05066 /* RSAEncryptor.m in Sources */,
 				1847463E21E03DF200E05066 /* main.m in Sources */,
 				1847463021E03DF000E05066 /* AppDelegate.m in Sources */,
 			);
